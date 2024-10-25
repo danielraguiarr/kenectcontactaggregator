@@ -15,15 +15,15 @@ public class ContactValidator {
             throw new ContactNotFoundException("No contacts found in the external API.");
         }
         for (Contact contact : contacts) {
-            if (contact.id() <= 0) {
+            if (contact.getId() <= 0) {
                 throw new InvalidDataException("id", "Invalid contact ID.");
             }
 
-            if (contact.name() == null) {
+            if (contact.getName() == null) {
                 throw new InvalidDataException("name", "Contact name is null.");
             }
 
-            if (contact.email() == null) {
+            if (contact.getEmail() == null) {
                 throw new InvalidDataException("email", "Email is null.");
             }
         }

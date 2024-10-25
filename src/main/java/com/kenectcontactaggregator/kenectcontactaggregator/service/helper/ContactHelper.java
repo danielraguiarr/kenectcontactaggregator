@@ -1,10 +1,12 @@
 package com.kenectcontactaggregator.kenectcontactaggregator.service.helper;
 
 import com.kenectcontactaggregator.kenectcontactaggregator.model.Contact;
+import com.kenectcontactaggregator.kenectcontactaggregator.model.ContactResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,21 +36,14 @@ public class ContactHelper {
                     apiUrl + "?page=" + currentPage,
                     HttpMethod.GET,
                     entity,
-                    Contact[].class
+                    ContactResponse.class
             );
 
-            if (response.getBody() != null) {
-                for (Contact contact : response.getBody()) {
-                    Contact builtContact = Contact.builder()
-                            .id(contact.id())
-                            .name(contact.name())
-                            .email(contact.email())
-                            .source(contact.source())
-                            .createdAt(contact.createdAt())
-                            .updatedAt(contact.updatedAt())
-                            .build();
-                    allContacts.add(builtContact);
-                }
+            if (response.getBody() != null && response.getBody().getContacts() != null) {
+                List<Contact> contacts = response.getBody().getContacts();
+                contacts.forEach(contact -> contact.setSource("KENECT_LABS"));
+
+                allContacts.addAll(contacts);
                 currentPage++;
                 hasMorePages = checkNextPage(response.getHeaders());
             } else {
