@@ -41,9 +41,19 @@ public class ContactHelper {
 
             if (response.getBody() != null && response.getBody().getContacts() != null) {
                 List<Contact> contacts = response.getBody().getContacts();
-                contacts.forEach(contact -> contact.setSource("KENECT_LABS"));
+                for (Contact contact : contacts) {
+                    Contact builtContact = Contact.builder()
+                            .id(contact.getId())
+                            .name(contact.getName())
+                            .email(contact.getEmail())
+                            .createdAt(contact.getCreatedAt())
+                            .updatedAt(contact.getUpdatedAt())
+                            .source("KENECT_LABS")
+                            .build();
 
-                allContacts.addAll(contacts);
+                    allContacts.add(builtContact);
+                }
+
                 currentPage++;
                 hasMorePages = checkNextPage(response.getHeaders());
             } else {

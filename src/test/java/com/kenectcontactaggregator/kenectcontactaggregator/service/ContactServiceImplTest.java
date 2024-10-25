@@ -59,7 +59,7 @@ public class ContactServiceImplTest {
         verify(contactValidator, times(1)).validateContacts(mockContacts);
 
         assertEquals(1, contacts.size());
-        assertEquals("John Doe", contacts.getFirst().name());
+        assertEquals("John Doe", contacts.getFirst().getName());
     }
 
     @Test
