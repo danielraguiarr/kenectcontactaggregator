@@ -13,8 +13,7 @@ import java.util.List;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     private ContactHelper contactHelper;
