@@ -17,8 +17,7 @@ public class ContactIntegrationTest {
     @Autowired
     private ContactServiceImpl contactService;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Test
     void testGetAllContacts_Integration() {

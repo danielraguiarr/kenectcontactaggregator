@@ -1,5 +1,6 @@
 package com.kenectcontactaggregator.kenectcontactaggregator.service.impl;
 
+import com.kenectcontactaggregator.kenectcontactaggregator.exception.ContactNotFoundException;
 import com.kenectcontactaggregator.kenectcontactaggregator.model.Contact;
 import com.kenectcontactaggregator.kenectcontactaggregator.service.ContactService;
 import com.kenectcontactaggregator.kenectcontactaggregator.service.helper.ContactHelper;
@@ -25,6 +26,9 @@ public class ContactServiceImpl implements ContactService {
     public List<Contact> getAllContacts() {
         List<Contact> contacts = contactHelper.fetchContacts(restTemplate);
         contactValidator.validateContacts(contacts);
+        if (contacts.isEmpty()) {
+            throw new ContactNotFoundException("No contacts found");
+        }
         return contacts;
     }
 }
