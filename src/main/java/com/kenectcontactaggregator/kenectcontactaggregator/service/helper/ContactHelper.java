@@ -38,7 +38,17 @@ public class ContactHelper {
             );
 
             if (response.getBody() != null) {
-                allContacts.addAll(List.of(response.getBody()));
+                for (Contact contact : response.getBody()) {
+                    Contact builtContact = Contact.builder()
+                            .id(contact.id())
+                            .name(contact.name())
+                            .email(contact.email())
+                            .source(contact.source())
+                            .createdAt(contact.createdAt())
+                            .updatedAt(contact.updatedAt())
+                            .build();
+                    allContacts.add(builtContact);
+                }
                 currentPage++;
                 hasMorePages = checkNextPage(response.getHeaders());
             } else {

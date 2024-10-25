@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: KenectContactAggregator
+
+api:
+  kenect:
+    url: https://k-messages-api.herokuapp.com/api/v1/contacts
+    token: J7ybt6jv6pdJ4gyQP9gNonsY
